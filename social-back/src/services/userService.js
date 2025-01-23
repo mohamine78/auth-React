@@ -2,7 +2,6 @@ import User from '../models/user.js';
 import bcrypt from 'bcryptjs';
 import { z } from 'zod';
 
-
 const userValidationSchema = z.object({
   email: z.string().email('Invalid email format').regex(
     /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
@@ -12,9 +11,7 @@ const userValidationSchema = z.object({
   avatarUrl: z.string().optional(),
 });
 
-
 const registerUser = async (email, password, avatarUrl) => {
-
   const validatedData = userValidationSchema.parse({ email, password, avatarUrl });
 
   const { email: validatedEmail, password: validatedPassword, avatarUrl: validatedAvatarUrl } = validatedData;
@@ -24,9 +21,7 @@ const registerUser = async (email, password, avatarUrl) => {
     throw new Error('Email existe deja');
   }
 
-
   const hashedPassword = await bcrypt.hash(validatedPassword, 10);
-
 
   const newUser = new User({
     email: validatedEmail,
@@ -37,7 +32,6 @@ const registerUser = async (email, password, avatarUrl) => {
   await newUser.save();
   return newUser;
 };
-
 
 const verifyPassword = async (email, password) => {
   const user = await User.findOne({ email });

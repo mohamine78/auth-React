@@ -1,13 +1,15 @@
 import express from 'express';
+import cors from 'cors';
 import mongoose from 'mongoose';
 import { register, login } from './controllers/userController.js';
 import { PORT, URI_MONGODB } from './config.js';
 
 const app = express();
 
+app.use(cors());
+
 app.use(express.json());
 
-// Connexion à MongoDB
 mongoose.connect(URI_MONGODB, {
   useNewUrlParser: true,
   useUnifiedTopology: true
@@ -15,7 +17,6 @@ mongoose.connect(URI_MONGODB, {
 .then(() => console.log('MongoDB connected'))
 .catch(err => console.log('MongoDB connection error:', err));
 
-// Définition des routes pour l'inscription et la connexion
 app.post('/api/users/register', register);
 app.post('/api/users/login', login);
 
