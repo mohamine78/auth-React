@@ -1,0 +1,27 @@
+{
+  "name": "auth-react",
+  "version": "1.0.0",
+  "description": "auth react express mongoose",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mohamine78/auth-React.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mohamine78/auth-React/issues"
+  },
+  "author": "Mohammed",
+  "homepage": "https://github.com/mohamine78/auth-React#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^4.21.2",
+    "mongoose": "^8.9.5",
+    "nodemon": "^3.1.9",
+    "zod": "^3.24.1"
+  }
+}
