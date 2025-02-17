@@ -23,3 +23,12 @@ app.post('/api/users/login', login);
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+// CORS Configuration
+const corsOptions = {
+  origin: 'http://localhost:5173', // Remplace par l'URL de ton front-end
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true,  // Permet l'envoi de cookies (JWT dans les cookies)
+};
+
+app.use(cors(corsOptions));

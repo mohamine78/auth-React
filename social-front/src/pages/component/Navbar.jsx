@@ -3,9 +3,9 @@ import { Dialog, DialogPanel } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 
 const navigation = [
-  { name: 'Home', href: '#' },
-  { name: 'Login', href: '#' },
-  { name: 'Sign up', href: '#' },
+  { name: 'Home', href: '/' },
+  { name: 'Login', href: '/login' },
+  { name: 'Sign up', href: '/register' },
 
 
 
@@ -47,7 +47,7 @@ export default function Navbar() {
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
             <a href="#" className="text-sm/6 font-semibold text-gray-900">
-              Log in <span aria-hidden="true">&rarr;</span>
+              Plus tard<span aria-hidden="true">&rarr;</span>
             </a>
           </div>
         </nav>
