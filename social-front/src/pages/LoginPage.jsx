@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';  // Importer useNavigate
+import { useNavigate } from 'react-router-dom'; 
 import '../App.css';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate();  // Initialiser le hook pour la redirection
+  const navigate = useNavigate(); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,7 +31,6 @@ const LoginPage = () => {
         console.log('Connexion réussie:', result);
         localStorage.setItem('token', result.token);
 
-        // Rediriger vers la page d'accueil après une connexion réussie
         navigate('/');
       } else {
         console.error('Erreur de connexion:', result.message);

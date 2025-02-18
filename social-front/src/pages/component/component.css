@@ -3,8 +3,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;  /* Utilise toute la hauteur de l'écran */
+    height: 100vh; 
     text-align: center;
-    padding: 20px; /* Ajoute un peu de padding si nécessaire */
+    padding: 20px; 
   }
   

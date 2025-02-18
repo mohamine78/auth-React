@@ -5,10 +5,9 @@ const LogoutButton = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // Supprimer le token
-    localStorage.removeItem('token');
+    localStorage.clear();
+    // sinon supprimer le token localStorage.removeItem('token');
     
-    // Rediriger vers la page de login
     navigate('/login');
   };
 

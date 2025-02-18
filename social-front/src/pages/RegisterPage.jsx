@@ -20,7 +20,7 @@ const RegisterPage = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
-        mode: 'cors',  // Ajout du mode CORS ici
+        mode: 'cors',  
       });
 
       const result = await response.json();
