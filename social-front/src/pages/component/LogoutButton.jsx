@@ -5,8 +5,7 @@ const LogoutButton = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.clear();
-    // sinon supprimer le token localStorage.removeItem('token');
+    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/;';
     
     navigate('/login');
   };

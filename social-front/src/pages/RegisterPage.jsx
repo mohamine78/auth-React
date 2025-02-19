@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie'; 
 
 
 const RegisterPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [pseudo, setPseudo] = useState('');
+  const [description, setDescription] = useState('');
+  const navigate = useNavigate();
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -11,6 +17,8 @@ const RegisterPage = () => {
     const data = {
       email,
       password,
+      pseudo,
+      description,
     };
 
     try {
@@ -27,6 +35,9 @@ const RegisterPage = () => {
 
       if (response.ok) {
         console.log('Utilisateur créé avec succès:', result);
+        Cookies.set('token', result.token, { expires: 1, secure: true, sameSite: 'Strict' });
+
+        navigate('/home');
       } else {
         console.error('Erreur d\'inscription:', result.message);
       }
@@ -50,73 +61,79 @@ const RegisterPage = () => {
                 </p>
               </div>
               <div className="m-7">
-                  <div className="mb-6">
-                    <label
-                      htmlFor="email"
-                      className="block mb-2 text-sm text-gray-600"
-                    >
-                      Email Address
-                    </label>
-                    <input
+                <div className="mb-6">
+                  <label htmlFor="pseudo" className="block mb-2 text-sm text-gray-600">Pseudo</label>
+                  <input
+                    type="text"
+                    value={pseudo}
+                    onChange={(e) => setPseudo(e.target.value)}
+                    required
+                    name="pseudo"
+                    id="pseudo"
+                    placeholder="Votre pseudo"
+                    className="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
+                  />
+                </div>
+                <div className="mb-6">
+                  <label htmlFor="description" className="block mb-2 text-sm text-gray-600">Description</label>
+                  <textarea
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    name="description"
+                    id="description"
+                    placeholder="Parlez de vous"
+                    className="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
+                  />
+                </div>
+                <div className="mb-6">
+                  <label htmlFor="email" className="block mb-2 text-sm text-gray-600">Email Address</label>
+                  <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                      name="email"
-                      id="email"
-                      placeholder="you@company.com"
-                      className="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
-                    />
-                  </div>
-                  <div className="mb-6">
-                    <div className="flex justify-between mb-2">
-                      <label
-                        htmlFor="password"
-                        className="text-sm text-gray-600 dark:text-gray-400"
-                      >
-                        Password
-                      </label>
-                      <a
-                        href="#!"
-                        className="text-sm text-gray-400 focus:outline-none focus:text-indigo-500 hover:text-indigo-500 dark:hover:text-indigo-300"
-                      >
-                        Forgot password?
-                      </a>
-                    </div>
-                    <input
+                    name="email"
+                    id="email"
+                    placeholder="you@company.com"
+                    className="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
+                  />
+                </div>
+                <div className="mb-6">
+                  <label htmlFor="password" className="block mb-2 text-sm text-gray-600">Password</label>
+                  <input
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
-                      name="password"
-                      id="password"
-                      placeholder="Your Password"
-                      className="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
-                    />
-                  </div>
-                  <div className="mb-6">
-                    <button
+                    name="password"
+                    id="password"
+                    placeholder="Your Password"
+                    className="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 dark:bg-gray-700 dark:text-white dark:placeholder-gray-500 dark:border-gray-600 dark:focus:ring-gray-900 dark:focus:border-gray-500"
+                  />
+                </div>
+                <div className="mb-6">
+                  <button
                     type="submit"
-                      className="w-full px-3 py-4 text-white bg-indigo-500 rounded-md focus:bg-indigo-600 focus:outline-none"
-                    >
-                      Sign up
-                    </button>
-                  </div>
-                  <p className="text-sm text-center text-gray-400">
-                    Don't have an account yet?{" "}
-                    <a
-                      href="/login"
-                      className="text-indigo-400 focus:outline-none focus:underline focus:text-indigo-500 dark:focus:border-indigo-800"
-                    >
-                      Sign in
-                    </a>
-                    .
-                  </p>
+                    className="w-full px-3 py-4 text-white bg-indigo-500 rounded-md focus:bg-indigo-600 focus:outline-none"
+                  >
+                    Sign up
+                  </button>
+                </div>
+                <p className="text-sm text-center text-gray-400">
+                  Don't have an account yet?{" "}
+                  <a
+                    href="/login"
+                    className="text-indigo-400 focus:outline-none focus:underline focus:text-indigo-500 dark:focus:border-indigo-800"
+                  >
+                    Sign in
+                  </a>
+                  .
+                </p>
               </div>
             </div>
           </div>
         </div>
-        </form>
+      </form>
     </div>
   );
 };

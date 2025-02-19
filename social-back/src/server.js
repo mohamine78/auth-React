@@ -4,8 +4,10 @@ dotenv.config();
 import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
-import { register, login } from './controllers/userController.js';
 import { PORT, URI_MONGODB } from './config.js';
+import userRouter from './routes/router.js'; 
+
+
 
 const app = express();
 
@@ -25,8 +27,8 @@ mongoose.connect(URI_MONGODB, {
 .then(() => console.log('MongoDB connected'))
 .catch(err => console.log('MongoDB connection error:', err));
 
-app.post('/api/users/register', register);
-app.post('/api/users/login', login);
+app.use('/api/users', userRouter);
+
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

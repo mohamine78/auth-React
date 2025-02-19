@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie'; 
 import '../App.css';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,9 +30,10 @@ const LoginPage = () => {
 
       if (response.ok) {
         console.log('Connexion réussie:', result);
-        localStorage.setItem('token', result.token);
-
-        navigate('/');
+        
+        Cookies.set('token', result.token, { expires: 1, secure: true, sameSite: 'Strict' });
+        
+        navigate('/home');
       } else {
         console.error('Erreur de connexion:', result.message);
       }
