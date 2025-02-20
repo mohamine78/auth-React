@@ -6,13 +6,11 @@ import { authenticateUser } from '../middleware/authMiddleware.js';
 const router = express.Router();
 
 router.post('/register', register);
-
 router.post('/login', login);
+router.get('/logout', logout); 
 
-router.get('/logout', logout);
-
-router.get('/home', authenticateUser), (res, req) => {
-    res.json({ message: 'Bienvenue sur votre compte securis2'})
-};
+router.get('/home', authenticateUser, (req, res) => {
+  res.json({ message: 'Bienvenue sur votre compte sécurisé' });
+});
 
 export default router;

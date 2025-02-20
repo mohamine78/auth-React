@@ -3,14 +3,12 @@ import jwt from 'jsonwebtoken';
 const JWT_SECRET = process.env.JWT_SECRET || 'secret_key';
 
 export const authenticateUser = (req, res, next) => {
-  const authHeader = req.headers.authorization;
+  const token = req.cookies.token || (req.headers.authorization?.startsWith('Bearer ') ? req.headers.authorization.split(' ')[1] : null);
 
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    console.error("Aucun token fourni ou format incorrect.");
-    return res.status(401).json({ message: 'Accès refusé. Token manquant ou mal formaté.' });
+  if (!token) {
+    console.error("Aucun token fourni.");
+    return res.status(401).json({ message: 'Accès refusé. Token manquant.' });
   }
-
-  const token = authHeader.split(' ')[1];
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET);

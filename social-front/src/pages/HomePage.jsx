@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import LogoutButton from './component/LogoutButton';
-import * as jwtDecode from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 import Cookies from 'js-cookie';
 import './component/component.css';
 

@@ -45,5 +45,11 @@ export const login = async (req, res) => {
 };
 
 export const logout = (req, res) => {
+  res.clearCookie('token', {
+    httpOnly: true,
+    sameSite: 'Strict',
+    path: '/',
+  });
+
   res.status(200).json({ message: 'Déconnexion réussie' });
 };
