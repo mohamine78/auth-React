@@ -38,7 +38,7 @@ const PostPage = () => {
 
   return (
     <div className="container mx-auto my-5 p-4">
-      <h1 className="text-3xl font-semibold text-gray-700 mb-4">Mes Posts</h1>
+      <h1 className="text-3xl font-semibold text-gray-700 mb-4 mt-16">Mes Posts</h1>
 
       <CreatePost refreshPosts={fetchPosts} />
 
@@ -49,25 +49,32 @@ const PostPage = () => {
       ) : Array.isArray(posts) && posts.length === 0 ? (
         <p>Aucun post trouvé.</p>
       ) : (
-        <ul className="space-y-4 mt-5">
-          {posts.map((post) => (
-            <li key={post._id} className="p-4 border border-gray-300 rounded shadow bg-white">
-              <h3 className="font-bold text-lg">{post.title}</h3>
-              <p>{post.content}</p>
-              
-              {post.image && (
-                <img 
-                  src={`http://localhost:5001/uploads/${post.image}`} 
-                  alt={post.title} 
-                  className="mt-2 max-w-full h-auto rounded"
-                  onError={(e) => (e.target.style.display = 'none')}
-                />
-              )}
-              
-              <p className="text-sm text-gray-500">Créé le: {new Date(post.createdAt).toLocaleDateString()}</p>
-            </li>
-          ))}
-        </ul>
+        <ul className="space-y-6 max-w-2xl mx-auto">
+  {posts.map((post) => (
+    <li 
+      key={post._id} 
+      className="p-6 border border-gray-200 rounded-xl shadow-lg bg-white max-w-2xl mx-auto transition-transform duration-300 hover:scale-105"
+    >
+      <h3 className="font-extrabold text-2xl text-indigo-600 mb-2">{post.title}</h3>
+      <p className="text-gray-700 mb-4">{post.content}</p>
+      
+      {post.image && (
+        <img 
+          src={`http://localhost:5001/uploads/${post.image}`} 
+          alt={post.title} 
+          className="mt-2 max-w-full h-auto rounded-xl mx-auto block shadow-md"
+          onError={(e) => (e.target.style.display = 'none')}
+        />
+      )}
+
+      <div className="mt-4 text-sm text-gray-500 flex justify-between items-center">
+        <p className="italic">Créé le: {new Date(post.createdAt).toLocaleDateString()}</p>
+      </div>
+    </li>
+  ))}
+</ul>
+
+
       )}
     </div>
   );

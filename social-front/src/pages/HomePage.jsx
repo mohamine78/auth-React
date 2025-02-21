@@ -29,7 +29,7 @@ const HomePage = () => {
   return (
     <div className="flex flex-col items-center">
       <div className="container mx-auto my-5">
-        <h1 className="text-3xl font-semibold text-gray-700 mb-4">Tous les Posts</h1>
+        <h1 className="text-3xl font-semibold text-gray-700 mb-4 mt-10">Tous les Posts</h1>
 
         {loading ? (
           <p className="text-gray-500">Chargement des posts...</p>
@@ -38,23 +38,33 @@ const HomePage = () => {
         ) : (
           <div className="mt-5">
             {posts.length > 0 ? (
-              <ul className="space-y-4">
-                {posts.map((post) => (
-                  <li key={post._id} className="p-4 border border-gray-300 rounded shadow bg-white">
-                    <h3 className="font-bold text-lg">{post.title}</h3>
-                    <p className="text-gray-700">{post.content}</p>
-                    {post.image && (
-                      <img
-                        src={`http://localhost:5001/uploads/${post.image}`}
-                        alt={post.title}
-                        className="mt-2 max-w-full h-auto rounded"
-                      />
-                    )}
-                    <p className="text-sm text-gray-500">Auteur: {post.author?.pseudo || 'Inconnu'}</p>
-                    <p className="text-sm text-gray-500">Créé le: {new Date(post.createdAt).toLocaleDateString()}</p>
-                  </li>
-                ))}
-              </ul>
+              <ul className="space-y-6 max-w-2xl mx-auto">
+              {posts.map((post) => (
+                <li 
+                  key={post._id} 
+                  className="p-6 border border-gray-200 rounded-xl shadow-lg bg-white max-w-2xl mx-auto transition-transform duration-300 hover:scale-105"
+                >
+                  <h3 className="font-extrabold text-2xl text-indigo-600 mb-2">{post.title}</h3>
+                  <p className="text-gray-700 mb-4">{post.content}</p>
+                  
+                  {post.image && (
+                    <img 
+                      src={`http://localhost:5001/uploads/${post.image}`} 
+                      alt={post.title} 
+                      className="mt-2 max-w-full h-auto rounded-xl mx-auto block shadow-md"
+                      onError={(e) => (e.target.style.display = 'none')}
+                    />
+                  )}
+            
+                  <div className="mt-4 text-sm text-gray-500 flex justify-between items-center">
+                    <p className="italic">Auteur: {post.author?.pseudo || 'Inconnu'}</p>
+                    <p className="italic">Créé le: {new Date(post.createdAt).toLocaleDateString()}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+            
+            
             ) : (
               <p className="text-gray-500">Aucun post disponible.</p>
             )}

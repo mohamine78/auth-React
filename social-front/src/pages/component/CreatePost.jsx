@@ -85,7 +85,7 @@ const CreatePost = ({ refreshPosts }) => {
         className="w-full p-3 text-white bg-indigo-500 rounded"
         disabled={loading}
       >
-        {loading ? 'Création en cours...' : 'Créer le Post'}
+        {loading ? 'Création en cours...' : 'Créer un Post'}
       </button>
     </form>
   );
