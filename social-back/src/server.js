@@ -9,18 +9,21 @@ import userRouter from './routes/router.js';
 import cookieParser from 'cookie-parser';
 import postRouter from './routes/postRoutes.js';
 
-const app = express(); // Déplacez cette ligne ici
+const app = express(); 
 
 // Middleware
-app.use(cookieParser()); // Ajout de cookie-parser
+app.use(cookieParser());
 const corsOptions = {
   origin: 'http://localhost:5173', 
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 };
 
-app.use(cors(corsOptions)); 
-app.use(express.json());   
+app.use(cors(corsOptions));
+app.use(express.json());
+
+// Servir les fichiers statiques depuis le dossier uploads
+app.use('/uploads', express.static('uploads'));
 
 // Connexion à MongoDB
 mongoose.connect(URI_MONGODB, {

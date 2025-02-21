@@ -1,11 +1,14 @@
 import { useState } from 'react'
 import { Dialog, DialogPanel } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import LogoutButton from './LogoutButton'
 
 const navigation = [
-  { name: 'Home', href: '/' },
+  { name: 'Home', href: '/home' },
   { name: 'Login', href: '/login' },
   { name: 'Sign up', href: '/register' },
+  { name: 'Create Post', href: '/create-post' },
+
 
 
 
@@ -46,9 +49,7 @@ export default function Navbar() {
             ))}
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            <a href="#" className="text-sm/6 font-semibold text-gray-900">
-              log out<span aria-hidden="true">&rarr;</span>
-            </a>
+            <LogoutButton />
           </div>
         </nav>
         <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
@@ -90,7 +91,7 @@ export default function Navbar() {
                     href="#"
                     className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
                   >
-                    Log in
+                    Log out
                   </a>
                 </div>
               </div>
