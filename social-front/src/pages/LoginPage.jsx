@@ -49,7 +49,7 @@ const LoginPage = () => {
           <div className="container mx-auto">
             <div className="max-w-md mx-auto my-10">
               <div className="text-center">
-                <h1 className="my-3 text-3xl font-semibold text-gray-700">Connexion</h1>
+                <h1 className="my-3 text-3xl font-semibold text-gray-700 mt-16">Connexion</h1>
                 <p className="text-gray-500 dark:text-gray-400">Connectez-vous pour accéder à votre compte</p>
               </div>
               <div className="m-7">
