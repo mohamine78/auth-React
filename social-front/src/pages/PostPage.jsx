@@ -12,7 +12,7 @@ const PostPage = () => {
   const fetchPosts = async () => {
     if (!token) {
       setError(
-        'Veuillez vous connecter pour voir vos posts <a href="/login" class="text-indigo-500 underline">Se connecter</a>'
+        'Veuillez vous connecter pour voir vos post <a href="/login" class="text-indigo-500 underline">Se connecter</a>'
       );
       setLoading(false);
       return;
