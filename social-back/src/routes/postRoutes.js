@@ -1,11 +1,11 @@
 import express from 'express';
 import multer from 'multer';
 import Post from '../models/Post.js';
-import { authenticateUser } from '../middleware/authMiddleware.js'; // ✅ Corrigé
+import { authenticateUser } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-// Configuration de multer pour stocker les images dans "uploads/"
+//multer: stocker les images dans "uploads/"
 const storage = multer.diskStorage({
   destination: 'uploads/',
   filename: (req, file, cb) => {
@@ -14,7 +14,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-// 🔹 Récupérer les posts de l'utilisateur connecté (GET /api/posts/myposts) ✅ Placé avant la route paramétrée
+//recuperer les posts de l'utilisateur connecté (GET /api/posts/myposts)
 router.get('/myposts', authenticateUser, async (req, res) => {
   try {
     const userId = req.user.userId;
@@ -27,12 +27,11 @@ router.get('/myposts', authenticateUser, async (req, res) => {
   }
 });
 
-// 🔹 Créer un post (POST /api/posts)
+//creer un post (POST /api/posts)
 router.post('/', authenticateUser, upload.single('image'), async (req, res) => {
   const { title, content } = req.body;
   const author = req.user.userId;
-  const image = req.file ? req.file.filename : null; // ✅ Stocker seulement le nom du fichier
-
+  const image = req.file ? req.file.filename : null;
   try {
     const newPost = new Post({ title, content, image, author });
     await newPost.save();
@@ -43,7 +42,7 @@ router.post('/', authenticateUser, upload.single('image'), async (req, res) => {
   }
 });
 
-// 🔹 Récupérer tous les posts (GET /api/posts)
+//recuperer tous les posts (GET /api/posts)
 router.get('/', async (req, res) => {
   try {
     const posts = await Post.find().populate('author', 'email pseudo');
@@ -54,7 +53,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// 🔹 Récupérer un post par son ID (GET /api/posts/:id)
+//recuperer un post par son ID (GET /api/posts/:id)
 router.get('/:id', async (req, res) => {
   try {
     const post = await Post.findById(req.params.id).populate('author', 'email pseudo');
@@ -66,7 +65,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// 🔹 Supprimer un post (DELETE /api/posts/:id)
+// Supprimer un post (DELETE /api/posts/:id)
 router.delete('/:id', authenticateUser, async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
@@ -83,5 +82,23 @@ router.delete('/:id', authenticateUser, async (req, res) => {
     res.status(500).json({ message: 'Erreur serveur' });
   }
 });
+
+// recuperer post user connecté (GET /api/posts/myposts)
+router.get('/myposts', authenticateUser, async (req, res) => {
+  try {
+    const userId = req.user.userId; // Vérifie si c'est bien userId ou id
+    const posts = await Post.find({ author: userId }).sort({ createdAt: -1 });
+
+    if (posts.length === 0) {
+      return res.status(200).json({ message: "Aucun post trouvé" });
+    }
+
+    res.status(200).json(posts);
+  } catch (error) {
+    console.error("Erreur lors de la récupération des posts de l'utilisateur:", error);
+    res.status(500).json({ message: "Erreur serveur" });
+  }
+});
+
 
 export default router;

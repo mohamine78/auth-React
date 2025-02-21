@@ -3,7 +3,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import CreatePost from './component/CreatePost';
 
-const Posts = () => {
+const PostPage = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -37,18 +37,16 @@ const Posts = () => {
   }, []);
 
   return (
-    <div className="container mx-auto my-5">
+    <div className="container mx-auto my-5 p-4">
       <h1 className="text-3xl font-semibold text-gray-700 mb-4">Mes Posts</h1>
 
-      {/* Formulaire de création de post */}
       <CreatePost refreshPosts={fetchPosts} />
 
-      {/* Affichage des posts */}
       {loading ? (
         <p>Chargement des posts...</p>
       ) : error ? (
         <p className="text-red-500">{error}</p>
-      ) : posts.length === 0 ? (
+      ) : Array.isArray(posts) && posts.length === 0 ? (
         <p>Aucun post trouvé.</p>
       ) : (
         <ul className="space-y-4 mt-5">
@@ -57,9 +55,12 @@ const Posts = () => {
               <h3 className="font-bold text-lg">{post.title}</h3>
               <p>{post.content}</p>
               
-              {/* Vérification et affichage de l'image */}
-              {post.image && (<img src={`http://localhost:5001/uploads/${post.image}`} alt={post.title} className="mt-2 max-w-full h-auto rounded"
-                  onError={(e) => (e.target.style.display = 'none')} // Cacher l'image si erreur de chargement
+              {post.image && (
+                <img 
+                  src={`http://localhost:5001/uploads/${post.image}`} 
+                  alt={post.title} 
+                  className="mt-2 max-w-full h-auto rounded"
+                  onError={(e) => (e.target.style.display = 'none')}
                 />
               )}
               
@@ -72,4 +73,4 @@ const Posts = () => {
   );
 };
 
-export default Posts;
+export default PostPage;

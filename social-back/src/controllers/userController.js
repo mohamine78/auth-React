@@ -61,7 +61,7 @@ export const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    // Valider uniquement l'email et le mot de passe (pas pseudo/description)
+    // Schema pour valdier email et mdp
     z.object({
       email: z.string().email('Format d\'email invalide'),
       password: z.string().min(6, 'Le mot de passe doit comporter au moins 6 caractères'),

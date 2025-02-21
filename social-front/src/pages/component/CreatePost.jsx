@@ -28,13 +28,13 @@ const CreatePost = ({ refreshPosts }) => {
         withCredentials: true,
       });
 
-      // Réinitialiser le formulaire
+      // Reset le formulaire
       setTitle('');
       setContent('');
       setImage(null);
       setAuthor('');
       
-      // Rafraîchir la liste des posts
+      // Rafraichir la liste des posts
       refreshPosts();
     } catch (err) {
       console.error('Erreur lors de la création du post:', err);

@@ -22,7 +22,6 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
-// Servir les fichiers statiques depuis le dossier uploads
 app.use('/uploads', express.static('uploads'));
 
 // Connexion à MongoDB

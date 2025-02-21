@@ -7,7 +7,7 @@ const HomePage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  // Récupération des posts depuis l'API
+  // Recuperation des posts depuis l'API
   const fetchPosts = async () => {
     try {
       const response = await axios.get('http://localhost:5001/api/posts', {
@@ -15,8 +15,8 @@ const HomePage = () => {
       });
       setPosts(response.data);
     } catch (err) {
-      console.error('Erreur lors de la récupération des posts:', err);
-      setError('Erreur lors de la récupération des posts.');
+      console.error('Erreur lors de la recuperation des posts:', err);
+      setError('Erreur lors de la recuperation des posts.');
     } finally {
       setLoading(false);
     }
