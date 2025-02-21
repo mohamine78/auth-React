@@ -100,5 +100,16 @@ router.get('/myposts', authenticateUser, async (req, res) => {
   }
 });
 
+// recuperer un seul post
+router.get('/:id', async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    if (!post) return res.status(404).json({ message: 'Post non trouvé' });
+    res.json(post);
+  } catch (error) {
+    res.status(500).json({ message: 'Erreur serveur' });
+  }
+});
+
 
 export default router;

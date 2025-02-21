@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../App.css';
+import { Link } from 'react-router-dom';
+
 
 const HomePage = () => {
   const [posts, setPosts] = useState([]);
@@ -44,7 +46,11 @@ const HomePage = () => {
                   key={post._id} 
                   className="p-6 border border-gray-200 rounded-xl shadow-lg bg-white max-w-2xl mx-auto transition-transform duration-300 hover:scale-105"
                 >
-                  <h3 className="font-extrabold text-2xl text-indigo-600 mb-2">{post.title}</h3>
+                  <h3 className="font-extrabold text-2xl text-indigo-600 mb-2">
+                  <Link to={`/post/${post._id}`}>
+                {post.title}
+                </Link>
+                  </h3>
                   <p className="text-gray-700 mb-4">{post.content}</p>
                   
                   {post.image && (
