@@ -1,22 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import CommentButton from './component/CommentButton';
 import '../App.css';
 
 const HomePage = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const navigate = useNavigate();
+
   const token = Cookies.get('token');
 
   useEffect(() => {
-    if (!token) {
-      navigate('/login');
-      return;
-    }
-
     const fetchPosts = async () => {
       try {
         const response = await axios.get('http://localhost:5001/api/posts', {
@@ -33,60 +29,46 @@ const HomePage = () => {
     };
 
     fetchPosts();
-  }, [token, navigate]);
+  }, [token]);
 
   return (
     <div className="flex flex-col items-center">
       <div className="container mx-auto my-5">
-        <h1 className="text-3xl font-semibold text-gray-700 mb-4 mt-10">Tous les Posts</h1>
+        <h1 className="text-4xl font-bold text-gray-800 mb-6 mt-10 text-center">Tous les Posts</h1>
 
         {loading ? (
-          <p className="text-gray-500">Chargement des posts...</p>
+          <p className="text-gray-500 text-center">Chargement des posts...</p>
         ) : error ? (
-          <p className="text-red-500">{error}</p>
+          <p className="text-red-500 text-center">{error}</p>
         ) : (
           <div className="mt-5">
             {posts.length > 0 ? (
-              <ul className="space-y-6 max-w-2xl mx-auto">
+              <ul className="space-y-8 max-w-3xl mx-auto">
                 {posts.map((post) => (
-                  <li 
-                    key={post._id} 
-                    className="p-6 border border-gray-200 rounded-xl shadow-lg bg-white max-w-2xl mx-auto transition-transform duration-300 hover:scale-105"
-                  >
-                    <h3 className="font-extrabold text-2xl text-indigo-600 mb-2">
-                      <Link to={`/post/${post._id}`}>{post.title}</Link>
+                  <li key={post._id} className="p-6 border border-gray-300 rounded-2xl shadow-lg bg-white">
+                    <h3 className="font-bold text-2xl text-indigo-600 mb-3">
+                      <Link to={`/post/${post._id}`} className="hover:underline">{post.title}</Link>
                     </h3>
-                    <p className="text-gray-700 mb-4">{post.content}</p>
+                    <p className="text-gray-700 mb-4 leading-relaxed">{post.content}</p>
                     {post.image && (
                       <img 
                         src={`http://localhost:5001/uploads/${post.image}`} 
                         alt={post.title} 
                         className="mt-2 max-w-full h-auto rounded-xl mx-auto block shadow-md"
-                        onError={(e) => (e.target.style.display = 'none')}
                       />
                     )}
                     <div className="mt-4 text-sm text-gray-500 flex justify-between items-center">
                       <p className="italic">Auteur: {post.author?.pseudo || 'Inconnu'}</p>
                       <p className="italic">Créé le: {new Date(post.createdAt).toLocaleDateString()}</p>
                     </div>
-                    {/* Input pour ajouter un commentaire */}
-                    <div className="mt-4 flex flex-col gap-2">
-                      <input
-                        type="text"
-                        placeholder="Ajouter un commentaire..."
-                        className="w-full p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:outline-none transition-all duration-200 bg-gray-50 text-gray-800 placeholder-gray-400 hover:border-blue-400"
-                      />
-                      <button
-                        className="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition-all duration-200 font-semibold"
-                      >
-                        Envoyer
-                      </button>
-                    </div>
+
+                    {/* Ajout du bouton des commentaires */}
+                    <CommentButton postId={post._id} />
                   </li>
                 ))}
               </ul>
             ) : (
-              <p className="text-gray-500">Aucun post disponible.</p>
+              <p className="text-gray-500 text-center">Aucun post disponible.</p>
             )}
           </div>
         )}

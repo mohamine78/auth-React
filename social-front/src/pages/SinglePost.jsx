@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import CommentButton from './component/CommentButton'; 
 
 const SinglePost = () => {
   const { id } = useParams(); // Récupération de l'ID du post
@@ -40,6 +41,11 @@ const SinglePost = () => {
 
         <div className="mt-6 text-sm text-gray-500 flex justify-between items-center">
           <p className="italic">Crée le: {new Date(post.createdAt).toLocaleDateString()}</p>
+        </div>
+
+        {/* Bouton pour afficher/masquer les commentaires et champ d'ajout */}
+        <div className="mt-6">
+          <CommentButton postId={post._id} />
         </div>
       </div>
     </div>
