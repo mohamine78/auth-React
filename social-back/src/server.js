@@ -1,5 +1,4 @@
 import dotenv from 'dotenv';
-dotenv.config();
 
 import express from 'express';
 import cors from 'cors';
@@ -10,6 +9,7 @@ import cookieParser from 'cookie-parser';
 import postRouter from './routes/postRoutes.js';
 import commentRoutes from './routes/commentRoutes.js';
 
+dotenv.config();
 const app = express(); 
 
 // Middleware
@@ -36,8 +36,6 @@ mongoose.connect(URI_MONGODB, {
 // Routes
 app.use('/api/users', userRouter);
 app.use('/api/posts', postRouter);
-
-
 app.use('/api/comments', commentRoutes);
 
 

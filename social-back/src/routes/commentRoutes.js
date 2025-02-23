@@ -1,5 +1,5 @@
 import express from 'express';
-import Comment from '../models/Comment.js';
+import Comment from '../models/comment.js';
 import Post from '../models/Post.js';
 import { authenticateUser } from '../middleware/authMiddleware.js';
 
