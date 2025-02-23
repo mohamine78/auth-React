@@ -10,7 +10,6 @@ const HomePage = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const token = Cookies.get('token');
-  const [comments, setComments] = useState({});
 
   useEffect(() => {
     if (!token) {
@@ -35,21 +34,6 @@ const HomePage = () => {
 
     fetchPosts();
   }, [token, navigate]);
-
-  const handleCommentSubmit = async (postId) => {
-    if (!comments[postId]?.trim()) return;
-
-    try {
-      await axios.post(
-        'http://localhost:5001/api/comments',
-        { content: comments[postId], post: postId },
-        { withCredentials: true }
-      );
-      setComments((prev) => ({ ...prev, [postId]: '' }));
-    } catch (error) {
-      console.error("Erreur lors de l'ajout du commentaire:", error);
-    }
-  };
 
   return (
     <div className="flex flex-col items-center">
@@ -85,19 +69,15 @@ const HomePage = () => {
                       <p className="italic">Auteur: {post.author?.pseudo || 'Inconnu'}</p>
                       <p className="italic">Créé le: {new Date(post.createdAt).toLocaleDateString()}</p>
                     </div>
-
                     {/* Input pour ajouter un commentaire */}
-                    <div className="mt-4">
+                    <div className="mt-4 flex flex-col gap-2">
                       <input
                         type="text"
-                        value={comments[post._id] || ''}
-                        onChange={(e) => setComments({ ...comments, [post._id]: e.target.value })}
                         placeholder="Ajouter un commentaire..."
-                        className="w-full p-2 border rounded"
+                        className="w-full p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:outline-none transition-all duration-200 bg-gray-50 text-gray-800 placeholder-gray-400 hover:border-blue-400"
                       />
                       <button
-                        onClick={() => handleCommentSubmit(post._id)}
-                        className="mt-2 px-4 py-1 bg-blue-500 text-white rounded"
+                        className="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition-all duration-200 font-semibold"
                       >
                         Envoyer
                       </button>
