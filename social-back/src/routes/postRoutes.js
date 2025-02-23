@@ -2,6 +2,7 @@ import express from 'express';
 import multer from 'multer';
 import Post from '../models/Post.js';
 import { authenticateUser } from '../middleware/authMiddleware.js';
+import Comment from '../models/comment.js';
 
 const router = express.Router();
 
@@ -110,6 +111,23 @@ router.get('/:id', async (req, res) => {
     res.status(500).json({ message: 'Erreur serveur' });
   }
 });
+
+// Récupérer les commentaires d'un post (GET /api/posts/:id/comments)
+router.get('/:id/comments', async (req, res) => {
+  try {
+    const comments = await Comment.find({ post: req.params.id })
+      .populate('author', 'pseudo') // Assure-toi que 'pseudo' est bien un champ du modèle User
+      .exec();
+
+    console.log("Commentaires récupérés :", comments); // Vérifie si les auteurs sont bien peuplés
+
+    res.status(200).json(comments);
+  } catch (error) {
+    console.error("Erreur lors de la récupération des commentaires:", error);
+    res.status(500).json({ message: "Erreur serveur" });
+  }
+});
+
 
 
 export default router;

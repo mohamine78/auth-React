@@ -39,6 +39,8 @@ app.use('/api/posts', postRouter);
 app.use('/api/comments', commentRoutes);
 
 
+
+
 // Démarrer le serveur
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
