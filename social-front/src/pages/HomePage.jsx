@@ -34,7 +34,7 @@ const HomePage = () => {
   return (
     <div className="flex flex-col items-center">
       <div className="container mx-auto my-5">
-        <h1 className="text-4xl font-bold text-gray-800 mb-6 mt-10 text-center">Tous les Posts</h1>
+        <h1 className="text-4xl font-bold text-gray-800 mb-6 mt-16 text-center">Tous les Posts</h1>
 
         {loading ? (
           <p className="text-gray-500 text-center">Chargement des posts...</p>
@@ -59,7 +59,9 @@ const HomePage = () => {
                     )}
                     <div className="mt-4 text-sm text-gray-500 flex justify-between items-center">
                       <p className="italic">Auteur: {post.author?.pseudo || 'Inconnu'}</p>
-                      <p className="italic">Créé le: {new Date(post.createdAt).toLocaleDateString()}</p>
+                      <p className="italic">
+                        {new Date(post.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} • {new Date(post.createdAt).toLocaleDateString('fr-FR')}
+                      </p>
                     </div>
 
                     {/* Ajout du bouton des commentaires */}

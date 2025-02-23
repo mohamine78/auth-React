@@ -36,7 +36,7 @@ router.post('/', authenticateUser, upload.single('image'), async (req, res) => {
   try {
     const newPost = new Post({ title, content, image, author });
     await newPost.save();
-    res.status(201).json({ message: 'Post créé avec succès', post: newPost });
+    res.status(201).json({ message: 'Post crée avec succès', post: newPost });
   } catch (error) {
     console.error('Erreur lors de la création du post:', error);
     res.status(500).json({ message: 'Erreur serveur' });

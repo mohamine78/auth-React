@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const CreatePost = ({ refreshPosts }) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [image, setImage] = useState(null);
-  const [author, setAuthor] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  // Récupérer le pseudo depuis les cookies
+  const pseudo = Cookies.get('pseudo');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,7 +20,7 @@ const CreatePost = ({ refreshPosts }) => {
     const formData = new FormData();
     formData.append('title', title);
     formData.append('content', content);
-    formData.append('author', author);
+    formData.append('author', pseudo); // Utiliser le pseudo récupéré
     if (image) {
       formData.append('image', image);
     }
@@ -32,9 +35,8 @@ const CreatePost = ({ refreshPosts }) => {
       setTitle('');
       setContent('');
       setImage(null);
-      setAuthor('');
       
-      // Rafraichir la liste des posts
+      // Rafraîchir la liste des posts
       refreshPosts();
     } catch (err) {
       console.error('Erreur lors de la création du post:', err);
@@ -48,41 +50,45 @@ const CreatePost = ({ refreshPosts }) => {
     <form onSubmit={handleSubmit} className="m-7 max-w-md mx-auto">
       {error && <p className="text-red-500">{error}</p>}
       
-      <input
-        type="text"
-        placeholder="Nom de l'auteur"
-        value={author}
-        onChange={(e) => setAuthor(e.target.value)}
-        required
-        className="w-full p-2 mb-3 border border-gray-300 rounded"
-      />
-      
-      <input
-        type="text"
-        placeholder="Titre du post"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        required
-        className="w-full p-2 mb-3 border border-gray-300 rounded"
-      />
+      <div className="mb-4">
+        <label className="block mb-1 font-bold text-gray-700">Titre du post</label>
+        <input
+          type="text"
+          placeholder="Titre du post"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+          className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+        />
+      </div>
 
-      <textarea
-        placeholder="Contenu du post"
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-        required
-        className="w-full p-2 mb-3 border border-gray-300 rounded"
-      />
+      <div className="mb-4">
+        <label className="block mb-1 font-bold text-gray-700">Contenu du post</label>
+        <textarea
+          placeholder="Contenu du post"
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          required
+          className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+        />
+      </div>
 
-      <input
-        type="file"
-        onChange={(e) => setImage(e.target.files[0])}
-        className="w-full p-2 mb-3 border border-gray-300 rounded"
-      />
+      <div className="mb-4">
+        <label className="block mb-1 font-bold text-gray-700">Ajouter une image</label>
+        <input
+          type="file"
+          id="file-input"
+          onChange={(e) => setImage(e.target.files[0])}
+          className="hidden" // Cacher le champ par défaut
+        />
+        <label htmlFor="file-input" className="block w-full p-2 border border-gray-300 rounded cursor-pointer hover:bg-gray-100 text-center transition">
+          {image ? image.name : 'Choisissez un fichier'}
+        </label>
+      </div>
 
       <button
         type="submit"
-        className="w-full p-3 text-white bg-indigo-500 rounded"
+        className="w-full p-3 text-white bg-indigo-500 rounded hover:bg-indigo-600 transition duration-200"
         disabled={loading}
       >
         {loading ? 'Création en cours...' : 'Créer un Post'}
