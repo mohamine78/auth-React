@@ -53,7 +53,7 @@ const RegisterPage = () => {
           <div className="container mx-auto">
             <div className="max-w-md mx-auto my-10">
               <div className="text-center">
-                <h1 className="my-3 text-3xl font-semibold text-gray-700">
+                <h1 className="my-3 text-3xl font-semibold text-gray-700 mt-16">
                   Sign up
                 </h1>
                 <p className="text-gray-500 dark:text-gray-400">
