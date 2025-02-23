@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import CommentButton from './component/CommentButton'; 
+import CommentList from './component/CommentList';
 
 const SinglePost = () => {
   const { id } = useParams(); // Récupération de l'ID du post
@@ -45,7 +45,7 @@ const SinglePost = () => {
 
         {/* Bouton pour afficher/masquer les commentaires et champ d'ajout */}
         <div className="mt-6">
-          <CommentButton postId={post._id} />
+        <CommentList postId={post._id} />
         </div>
       </div>
     </div>

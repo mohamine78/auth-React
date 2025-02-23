@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
-import CommentButton from './component/CommentButton';
 import '../App.css';
+import CommentList from './component/CommentList';
 
 const HomePage = () => {
   const [posts, setPosts] = useState([]);
@@ -63,7 +63,7 @@ const HomePage = () => {
                     </div>
 
                     {/* Ajout du bouton des commentaires */}
-                    <CommentButton postId={post._id} />
+                    <CommentList postId={post._id} />
                   </li>
                 ))}
               </ul>
